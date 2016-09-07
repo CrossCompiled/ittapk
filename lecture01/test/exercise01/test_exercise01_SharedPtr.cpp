@@ -199,6 +199,7 @@ TEST_F (NormalDestructor, OldPointerShouldDieOnAssignment) {
 
 //endregion
 
+
 //region ResetFunction
 
 class ResetFunction : public ::testing::Test {
@@ -212,7 +213,7 @@ protected:
 };
 
 TEST_F (ResetFunction, IsInvalidAfterReset) {
-        SharedPtr<Dummy> uut(value);
+        SharedPtr<Dummy> uut(this->value);
         uut.Reset();
         EXPECT_FALSE((bool)uut) << "Uut should be false / invalid";
 }

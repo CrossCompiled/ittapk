@@ -28,6 +28,8 @@ find_package(GTest REQUIRED)
 
 set(LTESTS
         test/exercise01/test_exercise01_SharedPtr.cpp
+        test/exercise02/test_exercise02_SharedPtrUnsafe.cpp
+        test/exercise02/test_exercise02_Comparison.cpp
         )
 
 foreach(testfile ${LTESTS})
