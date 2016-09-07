@@ -87,56 +87,59 @@ namespace exercise01 {
             return *this->count;
         }
 
-        bool operator==( const SharedPtr<T>& rhs ) const {
-            return this->ptr == rhs.ptr;
-        }
+        // Compare SharedPtr to a pointer
+        //
+        // We compare the value of lhs.ptr with the pointer.
+        // Thereby comparing two pointers as normal
+        //
+        template <typename U >
+        friend bool operator== (const SharedPtr<T> lhs, const U* rhs) {
+            return lhs.ptr == rhs;
+        };
 
-        bool operator!=( const SharedPtr<T>& rhs ) const {
-            return !(*this == rhs);
-        }
+        // Compare pointer with SharedPtr
+        //
+        // Doing the lazy switch compare
+        //
+        template <typename U >
+        friend bool operator== (const U* lhs, const SharedPtr<T> rhs) {
+            return rhs == lhs;
+        };
 
+        // Compare two SharedPtr's
+        //
+        // We have access to lhs.ptr but not rhs.ptr
+        // Therefor we compare rhs with lhs.ptr
+        // This in turns calls the SharedPtr == pointer above
+        // And now we have access to both pointers and can compare
         template <typename U >
         friend bool operator== (const SharedPtr<T> lhs, const SharedPtr<U> rhs) {
             return rhs == lhs.ptr;
         };
 
 
-        template <typename U >
-        friend bool operator== (const SharedPtr<T> lhs, const U* rhs) {
-            return lhs.ptr == rhs;
-        };
-
-
-        /*
+        // See compare
         template <typename U >
         friend bool operator!= (const SharedPtr<T> lhs, const SharedPtr<U> rhs) {
-            return !(rhs == lhs);
+            return !(lhs == rhs);
         };
 
+        // See compare
         template <typename U >
         friend bool operator!= (const SharedPtr<T> lhs, const U* rhs) {
-            return lhs.ptr != rhs;
+            return !(lhs == rhs);
         };
-         */
+
+        // See compare
+        template <typename U >
+        friend bool operator!= (const U* lhs, const SharedPtr<T> rhs) {
+            return !(lhs == rhs);
+        };
 
     private:
         T* ptr;
         size_t* count;
     };
-
-    /*
-    template <typename T, typename U >
-    bool operator==( const SharedPtr<T>& rhs, const SharedPtr<U>& lhs )
-    {
-        return rhs.ptr == lhs.ptr;
-    }
-     */
-
-
- //   template < typename T, typename U >
-
-
-   // template < typename T, typename U >
 
 
 }

@@ -52,14 +52,40 @@ TEST_F (CompareFunction, CompareTwoDifferentSharedPtr) {
     EXPECT_NE(&uut1, &uut2);
 }
 
+TEST_F (CompareFunction, CompareSharedPtrWithValue) {
+    Dummier* value = new Dummier(300);
+    SharedPtr<Dummier> uut1(value);
+
+    EXPECT_EQ(uut1, value);
+    EXPECT_EQ(value, uut1);
+
+    EXPECT_TRUE(value==uut1);
+    EXPECT_TRUE(uut1==value);
+}
+
 TEST_F (CompareFunction, CompareSharedPtrWithInheritance) {
     Dummier* value = new Dummier(300);
     SharedPtr<Dummier> uut1(value);
     SharedPtr<Dummy> uut2(uut1);
 
-    EXPECT_TRUE((uut1 == value));
     EXPECT_EQ(uut1, uut2);
+    EXPECT_EQ(uut2, uut1);
+
     EXPECT_TRUE(uut2==uut1);
+    EXPECT_TRUE(uut1==uut2);
+}
+
+TEST_F (CompareFunction, CompareSharedPtrWithInheritanceDifferent) {
+    Dummier* value1 = new Dummier(300);
+    Dummier* value2 = new Dummier(200);
+    SharedPtr<Dummier> uut1(value1);
+    SharedPtr<Dummy> uut2(value2);
+
+    EXPECT_NE(uut1, uut2);
+    EXPECT_NE(uut2, uut1);
+
+    EXPECT_TRUE(uut2!=uut1);
+    EXPECT_TRUE(uut1!=uut2);
 }
 
 //endregion
