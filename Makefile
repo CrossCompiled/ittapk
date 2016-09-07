@@ -29,7 +29,7 @@ clean: $(ALL_CLEAN_TARGETS)
 %_cover: % %_run
 	@cd $< && \
 	gcovr --exclude="build.*" --exclude="test.*" -b -r . && \
-	gcovr --exclude="build.*" --exclude="test.*" -b -r . --html --html-details -o html/example.html
+	gcovr --exclude="build.*" --exclude="test.*" -b -r . --html --html-details -o html/coverage.html
 
 %_clean: %
 	@echo "Cleaning $<"
