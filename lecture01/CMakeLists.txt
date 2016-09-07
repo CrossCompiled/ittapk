@@ -35,10 +35,10 @@ foreach(testfile ${LTESTS})
     add_executable(${name} "${testfile}")
     target_link_libraries(${name} ${LECTURE})
     target_link_libraries(${name} ${GMOCK_MAIN_LIBRARIES})
-    #set_target_properties(${name} PROPERTIES
-    #        COMPILE_FLAGS ${COVER_CXX_FLAGS}
-    #        LINK_FLAGS ${COVER_EXE_LINKER_FLAGS}
-    #        )
+    set_target_properties(${name} PROPERTIES
+            COMPILE_FLAGS ${COVER_CXX_FLAGS}
+            LINK_FLAGS ${COVER_EXE_LINKER_FLAGS}
+            )
     add_test(${name} ${name})
 endforeach()
 

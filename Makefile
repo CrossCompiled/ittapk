@@ -3,6 +3,7 @@ ALL_CLEAN_TARGETS = $(ALL_LECTURES:/=_clean)
 ALL_TEST_TARGETS = $(ALL_LECTURES:/=_tests)
 ALL_RUN_TARGETS = $(ALL_LECTURES:/=_run)
 ALL_COVER_TARGETS = $(ALL_LECTURES:/=_cover)
+ALL_COVER_HTML_TARGETS = $(ALL_LECTURES:/=_cover_html)
 
 .PHONY: all clean run cover
 
@@ -11,6 +12,8 @@ all: $(ALL_TEST_TARGETS)
 run: $(ALL_RUN_TARGETS)
 
 cover: $(ALL_COVER_TARGETS)
+
+cover_html: $(ALL_COVER_HTML_TARGETS)
 
 clean: $(ALL_CLEAN_TARGETS)
 
@@ -28,8 +31,12 @@ clean: $(ALL_CLEAN_TARGETS)
 
 %_cover: % %_run
 	@cd $< && \
-	gcovr --exclude="build.*" --exclude="test.*" -b -r . && \
-	gcovr --exclude="build.*" --exclude="test.*" -b -r . --html --html-details -o html/coverage.html
+	gcovr --exclude="build.*" --exclude="test.*" -b -r .
+
+%_cover_html: % %_run
+	@cd $< && \
+	gcovr --exclude="build.*" --exclude="test.*" -b -r . --html --html-details -o html/coverage.html && \
+	xdg-open html/coverage.html
 
 %_clean: %
 	@echo "Cleaning $<"
