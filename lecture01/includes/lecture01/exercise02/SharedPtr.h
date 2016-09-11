@@ -2,8 +2,8 @@
 // Created by Kalle Møller on 05/09/16.
 //
 
-#ifndef LECTURE01_SHAREDPTR_H
-#define LECTURE01_SHAREDPTR_H
+#ifndef LECTURE01_EXERCISE02_SHAREDPTR_H
+#define LECTURE01_EXERCISE02_SHAREDPTR_H
 
 #include <utility>
 
@@ -76,4 +76,4 @@ namespace exercise02 {
     };
 }
 
-#endif //LECTURE01_SHAREDPTR_H
+#endif //LECTURE01_EXERCISE02_SHAREDPTR_H

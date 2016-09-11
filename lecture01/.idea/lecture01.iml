@@ -4,8 +4,10 @@
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/modules/FindGTest.cmake" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/test/exercise02/test_exercise02_Comparison.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/test/exercise04/test_exercise04_Comparison.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/test/exercise03/test_exercise03_SharedPtr.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test/exercise02/test_exercise02_SharedPtrUnsafe.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/test/exercise02/test_exercise02_Comparison.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test/exercise01/test_exercise01_SharedPtr.cpp" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />

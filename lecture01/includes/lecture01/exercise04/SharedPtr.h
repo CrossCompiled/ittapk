@@ -2,27 +2,52 @@
 // Created by Kalle Møller on 05/09/16.
 //
 
-#ifndef LECTURE01_EXERCISE01_SHAREDPTR_H
-#define LECTURE01_EXERCISE01_SHAREDPTR_H
+#ifndef LECTURE01_EXERCISE04_SHAREDPTR_H
+#define LECTURE01_EXERCISE04_SHAREDPTR_H
 
 #include <utility>
 
-namespace exercise01 {
+namespace exercise04 {
+
+    template <typename T>
+    class HelperBase {
+    public:
+        virtual void operator()(T* t) {
+            delete t;
+        };
+        virtual ~HelperBase() {}
+    };
+
+    template <typename T, typename U>
+    class Helper: public HelperBase<T> {
+    public:
+        explicit Helper(U deleter) {
+            this->deleter = deleter;
+        }
+        void operator()(T* t) {
+            this->deleter(t);
+        };
+    private:
+        U deleter;
+    };
 
     template <typename T>
     class SharedPtr {
     public:
 
-        explicit SharedPtr(T* t) : ptr(t), count(new size_t(1)) {}
+        explicit SharedPtr(T* t) : SharedPtr(t, new HelperBase<T>()) {}
 
-        SharedPtr(const SharedPtr<T>& other): ptr(other.ptr), count(other.count) {
+        template <typename U>
+        SharedPtr(T* t, U* deleter) : ptr(t), count(new size_t(1)), deleter(deleter) {}
+
+        SharedPtr(const SharedPtr<T>& other): ptr(other.ptr), count(other.count), deleter(other.deleter) {
             if(*this) {
                 ++(*this->count);
             }
         }
 
         template <typename U>
-        SharedPtr(const SharedPtr<U>& other): ptr(other.GetPtr()), count(other.GetCount()) {
+        SharedPtr(const SharedPtr<U>& other): ptr(other.GetPtr()), count(other.GetCount()), deleter(other.GetDeleter()) {
             if(*this) {
                 ++(*this->count);
             }
@@ -36,6 +61,10 @@ namespace exercise01 {
             return this->ptr;
         }
 
+        HelperBase<T>* GetDeleter() const {
+            return this->deleter;
+        }
+
         SharedPtr(SharedPtr&& other) : ptr(std::move(other.ptr)), count(std::move(other.count)) {
             other.count = nullptr;
         }
@@ -45,6 +74,7 @@ namespace exercise01 {
             SharedPtr temp = std::move(*this);
             this->count = std::move(other.count);
             this->ptr = std::move(other.ptr);
+            this->deleter = std::move(other.deleter);
             other.count = nullptr;
             return *this;
         }
@@ -62,8 +92,9 @@ namespace exercise01 {
         void Reset() {
             if(*this) {
                 if (!--(*this->count)) {
-                    delete this->ptr;
+                    (*this->deleter)(this->ptr);
                     delete this->count;
+                    delete this->deleter;
                 }
                 this->count = nullptr;
             }
@@ -137,8 +168,9 @@ namespace exercise01 {
     private:
         T* ptr;
         size_t* count;
+        HelperBase<T>* deleter;
     };
 
 
 }
-#endif //LECTURE01_EXERCISE01_SHAREDPTR_H
+#endif //LECTURE01_EXERCISE04_SHAREDPTR_H

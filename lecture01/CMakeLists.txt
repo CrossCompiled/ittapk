@@ -30,6 +30,8 @@ set(LTESTS
         test/exercise01/test_exercise01_SharedPtr.cpp
         test/exercise02/test_exercise02_SharedPtrUnsafe.cpp
         test/exercise02/test_exercise02_Comparison.cpp
+        test/exercise03/test_exercise03_SharedPtr.cpp
+        test/exercise04/test_exercise04_Comparison.cpp
         )
 
 foreach(testfile ${LTESTS})
