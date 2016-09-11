@@ -24,10 +24,16 @@ clean: $(ALL_CLEAN_TARGETS)
 	cmake .. && \
 	cmake --build .
 
+ifeq ($(OS),Windows_NT)
+%_run: % %_tests
+	@cd $</build && \
+	ctest -V
+else
 %_run: % %_tests
 	@cd $</build && \
 	find . -name "*.gcda" -type f -delete; \
 	ctest -V
+endif
 
 %_cover: % %_run
 	@cd $< && \
@@ -38,9 +44,16 @@ clean: $(ALL_CLEAN_TARGETS)
 	gcovr --exclude="build.*" --exclude="test.*" -b -r . --html --html-details -o html/coverage.html && \
 	xdg-open html/coverage.html
 
+ifeq ($(OS),Windows_NT)
+%_clean: %
+	@echo "Cleaning $<"
+	@cd $</build && \
+	rmdir /S /Q CMakeFiles
+else
 %_clean: %
 	@echo "Cleaning $<"
 	@cd $</build && \
 	rm -r CMakeFiles
+endif
 
 

@@ -1,9 +1,22 @@
 cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
+
+IF(DEFINED CMAKE_BUILD_TYPE)
+   SET(CMAKE_BUILD_TYPE ${CMAKE_BUILD_TYPE} CACHE STRING "Choose the type of
+build, options are: None(CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) Debug
+Release RelWithDebInfo MinSizeRel.")
+ELSE()
+   SET(CMAKE_BUILD_TYPE Debug CACHE STRING "Choose the type of build,
+options are: None(CMAKE_CXX_FLAGS or CMAKE_C_FLAGS used) Debug Release
+RelWithDebInfo MinSizeRel.")
+ENDIF()
+
 project(lecture01 VERSION 0.1 LANGUAGES CXX C)
 
 #set(CMAKE_VERBOSE_MAKEFILE ON)
 
-SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
+
+#SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -MTd")
+#SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_CXX_FLAGS} -MTd")
 
 SET(COVER_CXX_FLAGS "-g -O0 -Wall -fprofile-arcs -ftest-coverage")
 
@@ -14,11 +27,11 @@ SET(COVER_EXE_LINKER_FLAGS "-fprofile-arcs -ftest-coverage")
 
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/modules/")
-#set(CMAKE_CXX_FLAGS " -std=gnu++11")
 
 set(LECTURE lecture01)
 add_library(${LECTURE} INTERFACE)
 target_include_directories(${LECTURE} INTERFACE includes)
+
 
 #########
 # TESTS
@@ -36,10 +49,10 @@ foreach(testfile ${LTESTS})
     get_filename_component(name ${testfile} NAME_WE)
     add_executable(${name} "${testfile}")
     target_link_libraries(${name} ${LECTURE})
-    target_link_libraries(${name} ${GMOCK_MAIN_LIBRARIES})
+    target_link_libraries(${name} ${GMOCK_MAIN_LIBRARY})
+	set_property(TARGET ${name} PROPERTY CXX_STANDARD_REQUIRED 11)
     set_target_properties(${name} PROPERTIES
-            COMPILE_FLAGS ${COVER_CXX_FLAGS}
-            LINK_FLAGS ${COVER_EXE_LINKER_FLAGS}
+            COMPILE_FLAGS -MTd
             )
     add_test(${name} ${name})
 endforeach()
