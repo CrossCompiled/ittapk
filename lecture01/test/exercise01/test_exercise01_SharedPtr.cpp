@@ -12,9 +12,9 @@ using namespace exercise01;
 
 class Dummy {
 public:
-    Dummy(size_t n) : n(n) {}
-    virtual ~Dummy() {}
-    size_t n;
+    Dummy(size_t* n) : n(n) {}
+    virtual ~Dummy() { ++(*n); }
+    size_t* n;
 };
 
 //region NormalConstructor
@@ -22,16 +22,16 @@ public:
 class NormalConstructor : public ::testing::Test {
 protected:
     virtual void SetUp() {
-        this->value = new Dummy(this->ORG_VALUE);
+        this->value = new Dummy(&this->status);
     }
 
     Dummy* value;
-    const size_t ORG_VALUE = 200;
+    size_t status = 200;
 };
 
 TEST_F (NormalConstructor, SameValue) {
     SharedPtr<Dummy> uut(this->value);
-    EXPECT_EQ(this->ORG_VALUE, uut->n) << "Values doesn't match";
+    EXPECT_EQ(&this->status, uut->n) << "Values doesn't match";
 }
 
 TEST_F (NormalConstructor, SameAddress) {
@@ -56,18 +56,18 @@ TEST_F (NormalConstructor, ShouldBeValid) {
 class CopyConstructor : public ::testing::Test {
 protected:
     virtual void SetUp() {
-        this->value = new Dummy(this->ORG_VALUE);
+        this->value = new Dummy(&this->status);
     }
 
     Dummy* value;
-    const size_t ORG_VALUE = 200;
+    size_t status = 200;
 };
 
 TEST_F (CopyConstructor, SameValue) {
     SharedPtr<Dummy> uut1(this->value);
     SharedPtr<Dummy> uut2(uut1);
-    EXPECT_EQ(this->ORG_VALUE, uut1->n) << "Values doesn't match";
-    EXPECT_EQ(this->ORG_VALUE, uut2->n) << "Values doesn't match";
+    EXPECT_EQ(&this->status, uut1->n) << "Values doesn't match";
+    EXPECT_EQ(&this->status, uut2->n) << "Values doesn't match";
 }
 
 TEST_F (CopyConstructor, SameAddress) {
@@ -98,19 +98,19 @@ TEST_F (CopyConstructor, ShouldBeValid) {
 class CopyAssignment : public ::testing::Test {
 protected:
     virtual void SetUp() {
-        this->value = new Dummy(this->ORG_VALUE);
+        this->value = new Dummy(&this->status);
     }
 
     Dummy* value;
-    const size_t ORG_VALUE = 200;
+    size_t status = 200;
 };
 
 TEST_F (CopyAssignment, SameValue) {
     SharedPtr<Dummy> uut1(this->value);
     SharedPtr<Dummy> uut2(NULL);
     uut2 = uut1;
-    EXPECT_EQ(this->ORG_VALUE, uut1->n) << "Values doesn't match";
-    EXPECT_EQ(this->ORG_VALUE, uut2->n) << "Values doesn't match";
+    EXPECT_EQ(&this->status, uut1->n) << "Values doesn't match";
+    EXPECT_EQ(&this->status, uut2->n) << "Values doesn't match";
 }
 
 TEST_F (CopyAssignment, SameAddress) {
@@ -148,18 +148,18 @@ TEST_F (CopyAssignment, ShouldBeValid) {
 class NormalDestructor : public ::testing::Test {
 protected:
     virtual void SetUp() {
-        this->value = new Dummy(this->ORG_VALUE);
+        this->value = new Dummy(&this->status);
     }
 
     Dummy* value;
-    const size_t ORG_VALUE = 200;
+    size_t status = 200;
 };
 
 TEST_F (NormalDestructor, OutOfScope) {
     {
         SharedPtr<Dummy> uut(this->value);
     }
-    EXPECT_DEATH(delete(this->value), "");
+    EXPECT_EQ(201, this->status);
 }
 
 TEST_F (NormalDestructor, OutOfScopeAfterReset) {
@@ -167,7 +167,7 @@ TEST_F (NormalDestructor, OutOfScopeAfterReset) {
         SharedPtr<Dummy> uut(value);
         uut.Reset();
     }
-    EXPECT_DEATH(delete(this->value), "");
+    EXPECT_EQ(201, this->status);
 }
 
 TEST_F (NormalDestructor, SingleOfTwoOutOfScope) {
@@ -186,15 +186,16 @@ TEST_F (NormalDestructor, TwoOfTwoOutOfScope) {
         SharedPtr<Dummy> uut1(value);
         SharedPtr<Dummy> uut2(uut1);
     }
-    EXPECT_DEATH(delete(this->value), "");
+    EXPECT_EQ(201, this->status);
 }
 
 TEST_F (NormalDestructor, OldPointerShouldDieOnAssignment) {
     SharedPtr<Dummy> uut1(this->value);
-    Dummy* other = new Dummy(this->ORG_VALUE);
-    SharedPtr<Dummy> uut2(other);
-    uut2 = uut1;
-    EXPECT_DEATH(delete(other), "");
+    size_t status2 = 300;
+    SharedPtr<Dummy> uut2(new Dummy(&status2));
+    uut1 = uut2;
+    EXPECT_EQ(201, this->status);
+    EXPECT_EQ(300, status2);
 }
 
 //endregion
@@ -205,11 +206,11 @@ TEST_F (NormalDestructor, OldPointerShouldDieOnAssignment) {
 class ResetFunction : public ::testing::Test {
 protected:
     virtual void SetUp() {
-        this->value = new Dummy(this->ORG_VALUE);
+        this->value = new Dummy(&this->status);
     }
 
     Dummy* value;
-    const size_t ORG_VALUE = 200;
+    size_t status = 200;
 };
 
 TEST_F (ResetFunction, IsInvalidAfterReset) {

@@ -12,9 +12,9 @@ using namespace exercise02;
 
 class Dummy {
 public:
-    Dummy(size_t n) : n(n) {}
-    virtual ~Dummy() {}
-    size_t n;
+    Dummy(size_t* n) : n(n) {}
+    virtual ~Dummy() { ++(*n); }
+    size_t* n;
 };
 
 //region UnsafeCall
@@ -24,9 +24,10 @@ void MyCall(SharedPtr<Dummy> sharedPtr) {
 }
 
 TEST (NormalConstructor, ) {
-    Dummy* value = new Dummy(200);
+    size_t status = 200;
+    Dummy* value = new Dummy(&status);
     MyCall(value);
-    EXPECT_DEATH(delete value, "");
+    EXPECT_EQ(201, status);
 }
 
 //endregion
