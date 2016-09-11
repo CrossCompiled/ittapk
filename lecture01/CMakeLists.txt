@@ -14,17 +14,9 @@ project(lecture01 VERSION 0.1 LANGUAGES CXX C)
 
 #set(CMAKE_VERBOSE_MAKEFILE ON)
 
-
-#SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -MTd")
-#SET(CMAKE_EXE_LINKER_FLAGS "${CMAKE_CXX_FLAGS} -MTd")
-
 SET(COVER_CXX_FLAGS "-g -O0 -Wall -fprofile-arcs -ftest-coverage")
-
 SET(COVER_C_FLAGS "-g -O0 -Wall -fprofile-arcs -ftest-coverage")
-
 SET(COVER_EXE_LINKER_FLAGS "-fprofile-arcs -ftest-coverage")
-
-
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/modules/")
 
@@ -50,10 +42,13 @@ foreach(testfile ${LTESTS})
     add_executable(${name} "${testfile}")
     target_link_libraries(${name} ${LECTURE})
     target_link_libraries(${name} ${GMOCK_MAIN_LIBRARY})
-	set_property(TARGET ${name} PROPERTY CXX_STANDARD_REQUIRED 11)
     set_target_properties(${name} PROPERTIES
-            COMPILE_FLAGS -MTd
-            )
+        CXX_STANDARD 11
+        CXX_STANDARD_REQUIRED YES
+    )
+#    set_target_properties(${name} PROPERTIES
+#            COMPILE_FLAGS "-std=c++11"
+#            )
     add_test(${name} ${name})
 endforeach()
 

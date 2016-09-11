@@ -15,8 +15,6 @@ namespace exercise01 {
 
         explicit SharedPtr(T* t) : ptr(t), count(new size_t(1)) {}
 
-        SharedPtr(T* t, size_t n) : ptr(t), count(new size_t(n)) {}
-
         SharedPtr(const SharedPtr<T>& other): ptr(other.ptr), count(other.count) {
             if(*this) {
                 ++(*this->count);
