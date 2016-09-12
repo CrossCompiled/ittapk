@@ -10,7 +10,7 @@ set(LECTURE lecture02)
 
 project(${LECTURE} VERSION 0.1 LANGUAGES CXX C)
 
-set(CMAKE_VERBOSE_MAKEFILE ON)
+#set(CMAKE_VERBOSE_MAKEFILE ON)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/modules/")
 
@@ -26,6 +26,7 @@ find_package(GTest REQUIRED)
 
 set(LTESTS
         test/exercise01/test_exercise01_MyArray.cpp
+        test/exercise02/test_exercise02_MyArray.cpp
         )
 
 foreach(testfile ${LTESTS})

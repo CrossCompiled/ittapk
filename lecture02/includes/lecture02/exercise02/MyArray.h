@@ -2,17 +2,17 @@
 // Created by Kalle Møller on 05/09/16.
 //
 
-#ifndef LECTURE02_EXERCISE01_SHAREDPTR_H
-#define LECTURE02_EXERCISE01_SHAREDPTR_H
+#ifndef LECTURE02_EXERCISE02_SHAREDPTR_H
+#define LECTURE02_EXERCISE02_SHAREDPTR_H
 
 #include <utility>
 #include <type_traits>
 
-namespace exercise01 {
+namespace exercise02 {
 
 
 
-    template<typename T, size_t N>
+    template<typename T, size_t N, typename P = std::is_pointer<T>::value >
     class MyArray {
 
     public:
@@ -74,9 +74,18 @@ namespace exercise01 {
             return N;
         }
 
-
+        size_t flaf() const {
+            std::cout << "TRUER" << std::endl;
+            return 1;
+        }
     private:
         T data[N];
+    };
+
+    template<typename T, size_t N>
+    size_t exercise02::MyArray<T, N, std::true_type>::flaf() const {
+        std::cout << "TRUE" << std::endl;
+        return 2;
     };
 
     template<typename T, typename U>

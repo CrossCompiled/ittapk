@@ -56,25 +56,46 @@ TEST (FindMethod, FindImplicit) {
 
 //region CopyConst
 
-TEST (CopyConst, CopyImplicit) {
+TEST (CopyConst, CopyConstImplicit) {
     MyArray<int, 50> uut1;
-    uut1.fill(3);
-
-
     MyArray<double, 50> uut2;
 
+    uut1.fill(3);
     uut2 = uut1;
 
-    //uut1 = std::move(uut2);
-    //uut2.fill(3);
-
-    //uut1 = uut2;
-
-    //for(size_t i=0; i < 50; ++i){
-    //    EXPECT_EQ(3, uut1[i]);
-    //}
+    for(size_t i=0; i < 50; ++i){
+        EXPECT_EQ(3, uut2[i]);
+    }
 
 }
 
+TEST (CopyConst, CopyAssignImplicit) {
+    MyArray<int, 50> uut1;
+    uut1.fill(3);
+
+    MyArray<double, 50> uut2(uut1);
+
+    for(size_t i=0; i < 50; ++i){
+        EXPECT_EQ(3, uut2[i]);
+    }
+
+}
+
+TEST (CopyConst, DifferentSize) {
+    MyArray<int, 50> uut1;
+    uut1.fill(3);
+
+    MyArray<double, 100> uut2(uut1);
+
+    for(size_t i=0; i < 50; ++i){
+        EXPECT_EQ(3, uut2[i]);
+    }
+
+}
+
+
+
 //endregion
+
+
 
