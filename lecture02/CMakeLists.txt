@@ -27,6 +27,7 @@ find_package(GTest REQUIRED)
 set(LTESTS
         test/exercise01/test_exercise01_MyArray.cpp
         test/exercise02/test_exercise02_MyArray.cpp
+        test/exercise03/test_exercise03_MyArray.cpp
         )
 
 foreach(testfile ${LTESTS})

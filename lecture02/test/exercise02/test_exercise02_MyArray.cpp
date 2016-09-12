@@ -14,9 +14,10 @@ using namespace exercise02;
 
 TEST (NormalConstructor, FillIt) {
     MyArray<int*, 50> uut;
-    int y = 10;
-    uut.fill(&y);
-    EXPECT_EQ(1, uut.flaf());
+    uut[0] = new int(10);
+    EXPECT_EQ(10, *uut[0]);
+    auto location = myfind(uut.begin(), uut.end(), 10);
+    EXPECT_EQ(10, **location);
 }
 
 //endregion
