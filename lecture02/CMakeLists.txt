@@ -41,6 +41,10 @@ foreach(testfile ${LTESTS})
         set_target_properties(${name} PROPERTIES
             COMPILE_FLAGS "-MTd"
         )
+    elseif(APPLE)
+        set_target_properties(${name} PROPERTIES
+                COMPILE_FLAGS "-g -O0 -Wall"
+                )
 	else()
 		set_target_properties(${name} PROPERTIES
             COMPILE_FLAGS "-g -O0 -Wall -fprofile-arcs -ftest-coverage"

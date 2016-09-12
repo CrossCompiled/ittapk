@@ -9,33 +9,59 @@
 
 namespace exercise01 {
 
-    template<typename T>
+    template<typename T, size_t N>
     class MyArray {
 
     public:
-        MyArray() : MyArray(10) {}
+        MyArray() {}
 
-        explicit MyArray(size_t size) : size_(size) {
-            this->data = new T[this->size_];
-            this->begin_ = &this->data;
-            this->end_ = this->begin_ + this->size_;
+        template<typename U>
+        MyArray(const MyArray<U, N>& other) {
+            MyArray<T, N> temp(other);
+            std::swap(temp, *this);
+            return *this;
         }
 
-        ~MyArray() {
-            delete this->data;
-        };
+        template<typename U>
+        MyArray(MyArray<U,N>&& other) {
+            *this = std::move(other);
+        }
+
+        template<typename U>
+        MyArray& operator=(MyArray<U, N>&& other) {
+            auto dest = this->data;
+            for(auto source=other.begin(); source != other.end(); ++source, ++dest) {
+                *dest = std::move(*source);
+            }
+            return *this;
+        }
+
+
+        template<typename U>
+        MyArray& operator=(const MyArray<U, N>& other) {
+            MyArray<T, N> temp(other);
+            std::swap(temp, *this);
+            return *this;
+        }
 
         void fill(const T& value) {
-            memset(this->data, value, this->begin() - this->end());
+            memset(this->data, value, this->end() - this->begin());
         }
 
-        T* begin() const {
-            return this->begin_;
+        T* begin() {
+            return this->data;
         }
 
-        T* end() const {
-            return this->end_;
+        T const * begin() const {
+            return this->data;
+        }
 
+        T* end() {
+            return this->data + N;
+        }
+
+        T const * end() const {
+            return this->data + N;
         }
 
         T &operator[](int i) const {
@@ -46,14 +72,24 @@ namespace exercise01 {
             return this->data[i];
         }
 
-        size_t size() {}
+        size_t size() const {
+            return N;
+        }
 
     private:
-        size_t size_;
-        T* begin_;
-        T* end_;
-        T* data;
+        T data[N];
     };
+
+    template<typename T, typename U>
+    T* myfind(T* first, T* last, const U& v) {
+        for(; first != last; ++first) {
+            if (*first == v) {
+                return first;
+            }
+        }
+        return last;
+    }
+
 
 }
 #endif //LECTURE02_EXERCISE01_SHAREDPTR_H
