@@ -6,40 +6,40 @@
       <sourceFolder url="file://$MODULE_DIR$/CMakeLists.txt" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test/exercise04/test_exercise04_Comparison.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test/exercise03/test_exercise03_SharedPtr.cpp" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/test/exercise02/test_exercise02_SharedPtrUnsafe.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test/exercise02/test_exercise02_Comparison.cpp" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/test/exercise02/test_exercise02_SharedPtrUnsafe.cpp" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test/exercise01/test_exercise01_SharedPtr.cpp" isTestSource="false" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
       <library name="Header Search Paths">
         <CLASSES>
-          <root url="file://C:/MinGW/lib/gcc/x86_64-w64-mingw32/6.1.0/include-fixed" />
-          <root url="file://C:/MinGW/lib/gcc/x86_64-w64-mingw32/6.1.0/include" />
-          <root url="file://C:/MinGW/x86_64-w64-mingw32/include" />
-          <root url="file://C:/MinGW/include/c++/6.1.0" />
-          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-252f2c6c/252f2c6c/Release/googletest-prefix/src/googletest/googlemock/include" />
-          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-252f2c6c/252f2c6c/Release/googletest-prefix/src/googletest/googletest/include" />
-          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-252f2c6c/252f2c6c/Debug/googletest-prefix/src/googletest/googlemock/include" />
-          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-252f2c6c/252f2c6c/Debug/googletest-prefix/src/googletest/googletest/include" />
-          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-252f2c6c/252f2c6c/MinSizeRel/googletest-prefix/src/googletest/googlemock/include" />
-          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-252f2c6c/252f2c6c/MinSizeRel/googletest-prefix/src/googletest/googletest/include" />
-          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-252f2c6c/252f2c6c/RelWithDebInfo/googletest-prefix/src/googletest/googlemock/include" />
-          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-252f2c6c/252f2c6c/RelWithDebInfo/googletest-prefix/src/googletest/googletest/include" />
+          <root url="file://C:/MinGW/MinGW/include/c++/6.1.0" />
+          <root url="file://C:/MinGW/MinGW/x86_64-w64-mingw32/include" />
+          <root url="file://C:/MinGW/MinGW/lib/gcc/x86_64-w64-mingw32/6.1.0/include-fixed" />
+          <root url="file://C:/MinGW/MinGW/lib/gcc/x86_64-w64-mingw32/6.1.0/include" />
+          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-3699c585/3699c585/MinSizeRel/googletest-prefix/src/googletest/googlemock/include" />
+          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-3699c585/3699c585/MinSizeRel/googletest-prefix/src/googletest/googletest/include" />
+          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-3699c585/3699c585/Debug/googletest-prefix/src/googletest/googlemock/include" />
+          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-3699c585/3699c585/Debug/googletest-prefix/src/googletest/googletest/include" />
+          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-3699c585/3699c585/Release/googletest-prefix/src/googletest/googlemock/include" />
+          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-3699c585/3699c585/Release/googletest-prefix/src/googletest/googletest/include" />
+          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-3699c585/3699c585/RelWithDebInfo/googletest-prefix/src/googletest/googlemock/include" />
+          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-3699c585/3699c585/RelWithDebInfo/googletest-prefix/src/googletest/googletest/include" />
         </CLASSES>
         <SOURCES>
-          <root url="file://C:/MinGW/lib/gcc/x86_64-w64-mingw32/6.1.0/include-fixed" />
-          <root url="file://C:/MinGW/lib/gcc/x86_64-w64-mingw32/6.1.0/include" />
-          <root url="file://C:/MinGW/x86_64-w64-mingw32/include" />
-          <root url="file://C:/MinGW/include/c++/6.1.0" />
-          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-252f2c6c/252f2c6c/Release/googletest-prefix/src/googletest/googlemock/include" />
-          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-252f2c6c/252f2c6c/Release/googletest-prefix/src/googletest/googletest/include" />
-          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-252f2c6c/252f2c6c/Debug/googletest-prefix/src/googletest/googlemock/include" />
-          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-252f2c6c/252f2c6c/Debug/googletest-prefix/src/googletest/googletest/include" />
-          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-252f2c6c/252f2c6c/MinSizeRel/googletest-prefix/src/googletest/googlemock/include" />
-          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-252f2c6c/252f2c6c/MinSizeRel/googletest-prefix/src/googletest/googletest/include" />
-          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-252f2c6c/252f2c6c/RelWithDebInfo/googletest-prefix/src/googletest/googlemock/include" />
-          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-252f2c6c/252f2c6c/RelWithDebInfo/googletest-prefix/src/googletest/googletest/include" />
+          <root url="file://C:/MinGW/MinGW/include/c++/6.1.0" />
+          <root url="file://C:/MinGW/MinGW/x86_64-w64-mingw32/include" />
+          <root url="file://C:/MinGW/MinGW/lib/gcc/x86_64-w64-mingw32/6.1.0/include-fixed" />
+          <root url="file://C:/MinGW/MinGW/lib/gcc/x86_64-w64-mingw32/6.1.0/include" />
+          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-3699c585/3699c585/MinSizeRel/googletest-prefix/src/googletest/googlemock/include" />
+          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-3699c585/3699c585/MinSizeRel/googletest-prefix/src/googletest/googletest/include" />
+          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-3699c585/3699c585/Debug/googletest-prefix/src/googletest/googlemock/include" />
+          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-3699c585/3699c585/Debug/googletest-prefix/src/googletest/googletest/include" />
+          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-3699c585/3699c585/Release/googletest-prefix/src/googletest/googlemock/include" />
+          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-3699c585/3699c585/Release/googletest-prefix/src/googletest/googletest/include" />
+          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-3699c585/3699c585/RelWithDebInfo/googletest-prefix/src/googletest/googlemock/include" />
+          <root url="file://$USER_HOME$/.CLion2016.2/system/cmake/generated/lecture01-3699c585/3699c585/RelWithDebInfo/googletest-prefix/src/googletest/googletest/include" />
         </SOURCES>
       </library>
     </orderEntry>
