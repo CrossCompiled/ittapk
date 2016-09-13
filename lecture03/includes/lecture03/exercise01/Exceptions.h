@@ -159,32 +159,79 @@ namespace exercise01_3 {
     template <typename T>
     class MyVector {
     public:
-        explicit MyVector(size_t capacity = 10) : size_(capacity), data_(new T[size_]) {}
+        explicit MyVector(size_t capacity = 10) : capacity_(capacity), count_(0), data_(new T[capacity_]) {}
 
-        MyVector(const MyVector& other) {
+        MyVector(const MyVector& other) : count_(other.count_) {
             std::unique_ptr<T> temp(new T[other.size_]);
             std::copy(other.begin(), other.end(), temp.get());
             std::swap(data_, temp.get());
         }
 
-        MyVector(const MyVector&& other) noexcept : size_(std::move(other.size_)), data_(std::move(other.data_)) {}
+        MyVector(const MyVector&& other) noexcept : capacity_(std::move(other.capacity_)), data_(std::move(other.data_)) {}
 
         MyVector& operator =(const MyVector& other){
             MyVector<T> copy(other);
             std::swap(this, copy);
             return *this;
         }
-        ~MyVector();
-        size_t size() const;
-        T& back();
-        void push_back(const T& t );
-        void pop_back();
-        void insert(const T& t, size_t n);
-        T* begin();
-        T* end();
-        T& operator []( size_t i );
+
+        ~MyVector() {
+            delete data_;
+        }
+
+        size_t size() const {
+            return capacity_;
+        }
+
+        T& back() {
+            return data_[count_];
+        }
+
+        void push_back(const T& t ) {
+            if(count_ == capacity_){
+                capacity_ *= 2;
+                std::unique_ptr<T> temp(new T[capacity_]);
+                std::copy(data_, data_ + count_, temp);
+                std::swap(data_, temp);
+            }
+            data_[count_] = t;
+            ++count_;
+        }
+
+        void pop_back(){
+            --count_;
+        }
+
+        void insert(const T& t, size_t n) {
+            if(n > count_){
+                throw std::out_of_range("n size is bigger than count.");
+            }
+            if(n == capacity_){
+                capacity_ *= 2;
+                std::unique_ptr<T> temp(new T[capacity_]);
+                std::copy(data_, data_ + count_, temp);
+                std::swap(data_, temp);
+                ++count_;
+            }
+            data_[n] = t;
+        }
+
+        T* begin() {
+            return data_;
+        }
+
+        T* end() {
+            return data_ + count_;
+        }
+
+        T& operator []( size_t i ){
+            return data_[i];
+        }
+
     private:
-        size_t size_;
+
+        size_t count_;
+        size_t capacity_;
         T* data_; /* Contains the actual elements - data on the heap */
     };
 }
