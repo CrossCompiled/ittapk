@@ -2,8 +2,8 @@
 // Created by Kalle Møller on 05/09/16.
 //
 
-#ifndef LECTURE02_EXERCISE03_SHAREDPTR_H
-#define LECTURE02_EXERCISE03_SHAREDPTR_H
+#ifndef LECTURE02_EXERCISE03_MYARRAY_H
+#define LECTURE02_EXERCISE03_MYARRAY_H
 
 #include <utility>
 #include <type_traits>
@@ -19,7 +19,7 @@ namespace exercise03 {
         MyArray() {}
 
         template<typename U, size_t M>
-        MyArray(const MyArray<U, M>& other) {
+        explicit MyArray(const MyArray<U, M>& other) {
             std::copy(other.begin(), other.end(), this->data);
         }
 
@@ -105,4 +105,4 @@ namespace exercise03 {
 
 
 }
-#endif //LECTURE02_EXERCISE03_SHAREDPTR_H
+#endif //LECTURE02_EXERCISE03_MYARRAY_H
