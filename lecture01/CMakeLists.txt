@@ -13,7 +13,7 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 #SET(COVER_C_FLAGS "-g -O0 -Wall -fprofile-arcs -ftest-coverage")
 #SET(COVER_EXE_LINKER_FLAGS "-fprofile-arcs -ftest-coverage")
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/modules/")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/../modules/")
 
 set(LECTURE lecture01)
 add_library(${LECTURE} INTERFACE)

@@ -12,7 +12,7 @@ project(${LECTURE} VERSION 0.1 LANGUAGES CXX C)
 
 #set(CMAKE_VERBOSE_MAKEFILE ON)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/modules/")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/../modules/")
 
 add_library(${LECTURE} INTERFACE)
 target_include_directories(${LECTURE} INTERFACE includes)
