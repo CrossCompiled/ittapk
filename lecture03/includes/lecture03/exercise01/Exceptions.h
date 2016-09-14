@@ -189,7 +189,7 @@ namespace exercise01_3 {
         }
 
         T& back() {
-            return data_[count_];
+            return data_.get()[count_ - 1];
         }
 
         void push_back(const T& t ) {

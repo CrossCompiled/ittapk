@@ -61,6 +61,27 @@ TEST_F (NormalConstructor, Insert_Throws_IfNisBiggerThanCount){
     ASSERT_THROW(uut.insert(20, 43), std::out_of_range);
 }
 
+TEST_F (NormalConstructor, InsertAtRightPlace){
+    MyVector<int> uut(20);
+    uut.push_back(1);
+    uut.push_back(2);
+    uut.push_back(3);
 
+    uut.insert(20, 2);
+
+    EXPECT_EQ(uut[2], 20);
+    EXPECT_EQ(uut.count(), 3);
+}
+
+TEST_F (NormalConstructor, BackReturnsElement_CountIsUnchanged){
+    MyVector<int> uut(20);
+    uut.push_back(1);
+    uut.push_back(2);
+    uut.push_back(3);
+
+    int back = uut.back();
+
+    EXPECT_EQ(back, 3);
+}
 //endregion
 
