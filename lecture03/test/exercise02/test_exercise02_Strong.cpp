@@ -4,11 +4,9 @@
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#include <lecture03/exercise01/Exceptions.h>
+#include <lecture03/exercise02/LogFile.h>
 
-
-
-using namespace exercise01_1_2;
+using namespace exercise02;
 
 //region NormalConstructor
 
@@ -22,8 +20,9 @@ protected:
 };
 
 TEST_F (NormalConstructor, FillIt) {
-    EXPECT_EQ(1,1);
-}
+
+    EXPECT_EQ(1, 1);
+};
 
 //endregion
 
