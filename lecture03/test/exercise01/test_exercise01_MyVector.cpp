@@ -22,14 +22,34 @@ protected:
 TEST_F (NormalConstructor, FillIt) {
     MyVector<int> uut(5);
 
-    EXPECT_EQ(5, uut.size());
+    EXPECT_EQ(0, uut.count());
 }
 
 
 TEST_F (NormalConstructor, PushBack) {
     MyVector<int> uut(5);
     uut.push_back(1);
-    EXPECT_EQ(2,uut.size());
+    EXPECT_EQ(1,uut.count());
+}
+
+TEST_F (NormalConstructor, PushBack_Resize) {
+    MyVector<int> uut(2);
+    uut.push_back(1);
+    uut.push_back(2);
+    uut.push_back(3);
+
+    EXPECT_EQ(4,uut.size());
+}
+
+TEST_F (NormalConstructor, PushBack_Resize_ElementsSurvive) {
+    MyVector<int> uut(2);
+    uut.push_back(1);
+    uut.push_back(2);
+    uut.push_back(3);
+
+    EXPECT_EQ(1,uut[0]);
+    EXPECT_EQ(2,uut[1]);
+    EXPECT_EQ(3,uut[2]);
 }
 //endregion
 

@@ -164,10 +164,10 @@ namespace exercise01_3 {
     public:
         explicit MyVector(size_t capacity = 10) : capacity_(capacity), count_(0), data_(new T[capacity_]) {}
 
-        MyVector(const MyVector& other) : count_(other.count_) {
-            exercise04::SharedPtr<T> temp(new T[other.size_]);
-            std::copy(other.begin(), other.end(), temp.GetPtr());
-            std::swap( data_, temp.GetPtr());
+        MyVector(const MyVector& other) : capacity_(other.capacity_), count_(other.count_) {
+            std::unique_ptr<T> temp(new T[other.capacity_]);
+            std::copy(other.begin(), other.end(), temp.get());
+            std::swap( data_, temp);
         }
 
         MyVector(const MyVector&& other) noexcept : capacity_(std::move(other.capacity_)), data_(std::move(other.data_)) {}
@@ -179,11 +179,14 @@ namespace exercise01_3 {
         }
 
         ~MyVector() {
-            delete data_;
         }
 
         size_t size() const {
             return capacity_;
+        }
+
+        size_t count() const {
+            return count_;
         }
 
         T& back() {
@@ -192,13 +195,9 @@ namespace exercise01_3 {
 
         void push_back(const T& t ) {
             if(count_ == capacity_){
-                capacity_ *= 2;
-                exercise04::SharedPtr<T> temp(new T[capacity_]);
-                std::copy(data_, data_ + count_, temp.GetPtr());
-                T* lala = temp.GetPtr();
-                std::swap(data_, lala);
+                Resize();
             }
-            data_[count_] = t;
+            data_.get()[count_] = t;
             ++count_;
         }
 
@@ -211,33 +210,37 @@ namespace exercise01_3 {
                 throw std::out_of_range("n size is bigger than count.");
             }
             if(n == capacity_){
-                capacity_ *= 2;
-                exercise04::SharedPtr<T> temp(new T[capacity_]);
-                std::copy(data_, data_ + count_, temp.GetPtr());
-                T* lala = temp.GetPtr();
-                std::swap(data_, lala);
+                Resize();
                 ++count_;
             }
-            data_[n] = t;
+            data_.get()[n] = t;
         }
 
         T* begin() {
-            return data_;
+            return data_.get();
         }
 
         T* end() {
-            return data_ + count_;
+            return data_.get() + count_;
         }
 
         T& operator []( size_t i ){
-            return data_[i];
+            return data_.get()[i];
         }
 
     private:
 
+        void Resize(){
+            capacity_ *= 2;
+            std::unique_ptr<T> temp(new T[capacity_]);
+            std::copy(data_.get(), data_.get() + count_, temp.get()); //Notice that the elements should be copyable.
+            std::swap(data_, temp);
+        }
+
         size_t capacity_;
         size_t count_;
-        T* data_; /* Contains the actual elements - data on the heap */
+        std::unique_ptr<T> data_;
+//        T* data_; /* Contains the actual elements - data on the heap */
     };
 }
 #endif //LECTURE02_EXERCISE01_SHAREDPTR_H
