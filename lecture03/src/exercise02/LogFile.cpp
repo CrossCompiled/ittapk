@@ -2,11 +2,14 @@
 // Created by kaspersk on 9/14/16.
 //
 
-using namespace std;
+
 
 #include <lecture03/exercise02/LogFile.h>
 #include <iostream>
 #include <fstream>
+
+using namespace std;
+using namespace exercise02;
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction

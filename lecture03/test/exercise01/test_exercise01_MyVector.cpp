@@ -51,5 +51,16 @@ TEST_F (NormalConstructor, PushBack_Resize_ElementsSurvive) {
     EXPECT_EQ(2,uut[1]);
     EXPECT_EQ(3,uut[2]);
 }
+
+TEST_F (NormalConstructor, Insert_Throws_IfNisBiggerThanCount){
+    MyVector<int> uut(20);
+    uut.push_back(1);
+    uut.push_back(2);
+    uut.push_back(3);
+
+    ASSERT_THROW(uut.insert(20, 43), std::out_of_range);
+}
+
+
 //endregion
 

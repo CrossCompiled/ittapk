@@ -208,10 +208,7 @@ namespace exercise01_3 {
             if(n > count_){
                 throw std::out_of_range("n size is bigger than count.");
             }
-            if(n == capacity_){
-                Resize();
-                ++count_;
-            }
+
             data_.get()[n] = t;
         }
 
