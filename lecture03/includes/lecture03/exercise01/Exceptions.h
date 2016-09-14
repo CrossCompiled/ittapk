@@ -9,7 +9,6 @@
 #include <cstring>
 #include <memory>
 #include <algorithm>
-#include "../../../../lecture01/includes/lecture01/exercise04/sharedPtr.h"
 
 namespace exercise01_1_2 {
 

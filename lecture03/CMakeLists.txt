@@ -14,8 +14,11 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/modules/")
 
-add_library(${LECTURE} INTERFACE)
-target_include_directories(${LECTURE} INTERFACE includes)
+add_library(${LECTURE}
+        src/exercise02/LogFile.cpp
+        src/exercise02/ProgramTransformation.cpp
+        )
+target_include_directories(${LECTURE} PUBLIC includes)
 
 
 #########
@@ -26,6 +29,7 @@ find_package(GTest REQUIRED)
 
 set(LTESTS
         test/exercise01/test_exercise01_MyVector.cpp
+        test/exercise01/test_exercise01_Strong.cpp
         )
 
 foreach(testfile ${LTESTS})
