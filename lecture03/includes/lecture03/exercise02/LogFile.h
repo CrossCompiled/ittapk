@@ -8,23 +8,34 @@
 #include <string>
 #include <stdexcept>
 
-class LogFile
-{
-public:
-    enum EState { es_OK, es_NOT_INITIALIZED, es_COULD_NOT_OPEN_FILE, es_FILENAME_IS_EMPTY };
-    bool write( const std::string& data );
-    bool init( const std::string& logfilename );
-    EState getState() { return state_; }
+namespace exercise02 {
+
+    class LogFile {
+    public:
+        enum EState {
+            es_OK, es_NOT_INITIALIZED, es_COULD_NOT_OPEN_FILE, es_FILENAME_IS_EMPTY
+        };
+
+        bool write(const std::string &data);
+
+        bool init(const std::string &logfilename);
+
+        EState getState() { return state_; }
 
 
-    LogFile();
-    explicit LogFile( const std::string& logfilename );
-    ~LogFile();
+        LogFile();
 
-private:
-    std::string logfilename_;
-    EState      state_;
-    bool internalWrite( const std::string& data );
-};
+        explicit LogFile(const std::string &logfilename);
+
+        ~LogFile();
+
+    private:
+        std::string logfilename_;
+        EState state_;
+
+        bool internalWrite(const std::string &data);
+    };
+
+}
 
 #endif //LECTURE03_LOGFILE_H

@@ -4,9 +4,9 @@
 
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
-#include <lecture03/exercise01/Exceptions.h>
+#include <lecture03/exercise02/LogFile.h>
 
-using namespace exercise01_3;
+using namespace exercise02;
 
 //region NormalConstructor
 

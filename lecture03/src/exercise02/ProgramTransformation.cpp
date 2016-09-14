@@ -10,6 +10,8 @@
 
 using namespace std;
 
+typedef exercise02::LogFile LogFile;
+
 int main()
 {
     {
