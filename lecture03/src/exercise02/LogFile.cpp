@@ -7,6 +7,8 @@
 #include <lecture03/exercise02/LogFile.h>
 #include <iostream>
 #include <fstream>
+#include <exception>
+
 
 using namespace std;
 using namespace exercise02;
@@ -31,23 +33,29 @@ LogFile::~LogFile()
     cout << "Deleting LogFile Object" << endl;
 }
 
-bool LogFile::init( const string& logfilename )
+void LogFile::init( const string& logfilename )
 {
+    state_ = es_OK;
     logfilename_ = logfilename;
-    return internalWrite( "" );
+    internalWrite( "" );
+
 }
 
-bool LogFile::write( const string& data )
+void LogFile::write( const string& data )
 {
-    return internalWrite( data+"\n" );
+    internalWrite( data+"\n" );
 }
 
 bool LogFile::internalWrite( const string& data )
 {
+    if(state_ != es_OK){
+        throw std::runtime_error("Logfile not initialized");
+    }
     if( logfilename_ == "" )
     {
-        state_ = es_FILENAME_IS_EMPTY;
-        return false;
+        //state_ = es_FILENAME_IS_EMPTY;
+        //return false;
+        throw std::invalid_argument("File name is empty");
     }
     std::ofstream out;
     out.open( logfilename_.c_str(), std::ofstream::out | std::ofstream::app);
@@ -55,10 +63,11 @@ bool LogFile::internalWrite( const string& data )
         out << data;
     else
     {
-        state_ = es_COULD_NOT_OPEN_FILE;
+        //state_ = es_COULD_NOT_OPEN_FILE;
         cerr << "Cannot open file " << logfilename_ << endl;
-        return false;
+        throw std::runtime_error("Could not open file");
+        //return false;
     }
-    state_ = es_OK;
+    //state_ = es_OK;
     return true;
 }

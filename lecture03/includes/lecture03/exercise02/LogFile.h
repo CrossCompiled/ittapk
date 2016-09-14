@@ -16,11 +16,11 @@ namespace exercise02 {
             es_OK, es_NOT_INITIALIZED, es_COULD_NOT_OPEN_FILE, es_FILENAME_IS_EMPTY
         };
 
-        bool write(const std::string &data);
+        void write(const std::string &data);
 
-        bool init(const std::string &logfilename);
+        void init(const std::string &logfilename);
 
-        EState getState() { return state_; }
+        //EState getState() { return state_; }
 
 
         LogFile();

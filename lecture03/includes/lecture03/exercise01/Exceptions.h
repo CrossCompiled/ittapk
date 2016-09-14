@@ -166,14 +166,14 @@ namespace exercise01_3 {
         MyVector(const MyVector& other) : capacity_(other.capacity_), count_(other.count_) {
             std::unique_ptr<T> temp(new T[other.capacity_]);
             std::copy(other.begin(), other.end(), temp.get());
-            std::swap( data_, temp);
+            data_ = std::move(temp);
         }
 
-        MyVector(const MyVector&& other) noexcept : capacity_(std::move(other.capacity_)), data_(std::move(other.data_)) {}
+        MyVector(MyVector&& other) noexcept : capacity_(std::move(other.capacity_)), count_(std::move(other.count_)), data_(std::move(other.data_)) {}
 
-        MyVector& operator =(const MyVector& other){
+        MyVector& operator=(const MyVector& other){
             MyVector<T> copy(other);
-            std::swap(this, copy);
+            std::swap(copy, *this);
             return *this;
         }
 
@@ -212,11 +212,11 @@ namespace exercise01_3 {
             data_.get()[n] = t;
         }
 
-        T* begin() {
+        T* begin() const {
             return data_.get();
         }
 
-        T* end() {
+        T* end() const {
             return data_.get() + count_;
         }
 
