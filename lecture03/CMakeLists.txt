@@ -25,7 +25,7 @@ enable_testing()
 find_package(GTest REQUIRED)
 
 set(LTESTS
-        test/exercise01/test_exercise01_MyArray.cpp
+        test/exercise01/test_exercise01_MyVector.cpp
         )
 
 foreach(testfile ${LTESTS})

@@ -6,9 +6,7 @@
 #include <gmock/gmock.h>
 #include <lecture03/exercise01/Exceptions.h>
 
-
-
-using namespace exercise01_1_2;
+using namespace exercise01_3;
 
 //region NormalConstructor
 
@@ -22,8 +20,16 @@ protected:
 };
 
 TEST_F (NormalConstructor, FillIt) {
-    EXPECT_EQ(1,1);
+    MyVector<int> uut(5);
+
+    EXPECT_EQ(5, uut.size());
 }
 
+
+TEST_F (NormalConstructor, PushBack) {
+    MyVector<int> uut(5);
+    uut.push_back(1);
+    EXPECT_EQ(2,uut.size());
+}
 //endregion
 

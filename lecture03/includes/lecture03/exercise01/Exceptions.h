@@ -7,6 +7,9 @@
 
 #include <utility>
 #include <cstring>
+#include <memory>
+#include <algorithm>
+#include "../../../../lecture01/includes/lecture01/exercise04/sharedPtr.h"
 
 namespace exercise01_1_2 {
 
@@ -26,7 +29,7 @@ namespace exercise01_1_2 {
     /* Using */
     void fMyArray() {
         MyArray <int , 10> my;
-        int t;
+        int t = 0;
         my[5] = t;
     }
 
@@ -162,9 +165,9 @@ namespace exercise01_3 {
         explicit MyVector(size_t capacity = 10) : capacity_(capacity), count_(0), data_(new T[capacity_]) {}
 
         MyVector(const MyVector& other) : count_(other.count_) {
-            std::unique_ptr<T> temp(new T[other.size_]);
-            std::copy(other.begin(), other.end(), temp.get());
-            std::swap(data_, temp.get());
+            exercise04::SharedPtr<T> temp(new T[other.size_]);
+            std::copy(other.begin(), other.end(), temp.GetPtr());
+            std::swap( data_, temp.GetPtr());
         }
 
         MyVector(const MyVector&& other) noexcept : capacity_(std::move(other.capacity_)), data_(std::move(other.data_)) {}
@@ -190,9 +193,10 @@ namespace exercise01_3 {
         void push_back(const T& t ) {
             if(count_ == capacity_){
                 capacity_ *= 2;
-                std::unique_ptr<T> temp(new T[capacity_]);
-                std::copy(data_, data_ + count_, temp);
-                std::swap(data_, temp);
+                exercise04::SharedPtr<T> temp(new T[capacity_]);
+                std::copy(data_, data_ + count_, temp.GetPtr());
+                T* lala = temp.GetPtr();
+                std::swap(data_, lala);
             }
             data_[count_] = t;
             ++count_;
@@ -208,9 +212,10 @@ namespace exercise01_3 {
             }
             if(n == capacity_){
                 capacity_ *= 2;
-                std::unique_ptr<T> temp(new T[capacity_]);
-                std::copy(data_, data_ + count_, temp);
-                std::swap(data_, temp);
+                exercise04::SharedPtr<T> temp(new T[capacity_]);
+                std::copy(data_, data_ + count_, temp.GetPtr());
+                T* lala = temp.GetPtr();
+                std::swap(data_, lala);
                 ++count_;
             }
             data_[n] = t;
@@ -230,8 +235,8 @@ namespace exercise01_3 {
 
     private:
 
-        size_t count_;
         size_t capacity_;
+        size_t count_;
         T* data_; /* Contains the actual elements - data on the heap */
     };
 }
