@@ -57,8 +57,6 @@ void LogFileTransformed::write( const string& data )
         out << data+"\n";
     else
     {
-        cerr << "Cannot open file " << logfilename_ << endl;
         throw std::runtime_error("Could not open file");
-
     }
 }

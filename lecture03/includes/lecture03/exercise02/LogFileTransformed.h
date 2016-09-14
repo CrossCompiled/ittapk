@@ -16,9 +16,6 @@ namespace exercise02 {
 
         void init(const std::string &logfilename);
 
-
-
-
         LogFileTransformed();
 
         explicit LogFileTransformed(const std::string &logfilename);
@@ -27,7 +24,6 @@ namespace exercise02 {
 
     private:
         std::string logfilename_;
-
     };
 
 }
