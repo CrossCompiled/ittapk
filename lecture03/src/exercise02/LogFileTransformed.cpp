@@ -1,10 +1,14 @@
 //
+// Created by KasperSK on 14-09-2016.
+//
+
+//
 // Created by kaspersk on 9/14/16.
 //
 
 
 
-#include <lecture03/exercise02/LogFile.h>
+#include <lecture03/exercise02/LogFileTransformed.h>
 #include <iostream>
 #include <fstream>
 #include <exception>
@@ -13,60 +17,48 @@
 using namespace std;
 using namespace exercise02;
 
-
-#include <iostream>
-#include <fstream>
-using namespace std;
-
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-LogFile::LogFile()
+LogFileTransformed::LogFileTransformed()
 {
-    state_ = es_NOT_INITIALIZED;
     cout << "Creating LogFile Object" << endl;
 }
 
-LogFile::LogFile( const string& logfilename )
+LogFileTransformed::LogFileTransformed( const string& logfilename )
 {
     init( logfilename );
 }
 
-LogFile::~LogFile()
+LogFileTransformed::~LogFileTransformed()
 {
     cout << "Deleting LogFile Object" << endl;
 }
 
-bool LogFile::init( const string& logfilename )
-{
-    logfilename_ = logfilename;
-    return internalWrite( "" );
-}
-
-bool LogFile::write( const string& data )
-{
-    return internalWrite( data+"\n" );
-}
-
-bool LogFile::internalWrite( const string& data )
+void LogFileTransformed::init( const string& logfilename )
 {
     if( logfilename_ == "" )
     {
-        state_ = es_FILENAME_IS_EMPTY;
-        return false;
+        throw std::invalid_argument("File name is empty");
+    }
+    logfilename_ = logfilename;
+}
+
+void LogFileTransformed::write( const string& data )
+{
+    if( logfilename_ == "" )
+    {
+        throw std::invalid_argument("LogFile is not initialized");
     }
     std::ofstream out;
     out.open( logfilename_.c_str(), std::ofstream::out | std::ofstream::app);
     if( out )
-        out << data;
+        out << data+"\n";
     else
     {
-        state_ = es_COULD_NOT_OPEN_FILE;
         cerr << "Cannot open file " << logfilename_ << endl;
-        return false;
-    }
-    state_ = es_OK;
-    return true;
-}
+        throw std::runtime_error("Could not open file");
 
+    }
+}

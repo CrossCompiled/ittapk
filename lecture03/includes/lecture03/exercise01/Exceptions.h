@@ -43,10 +43,9 @@ namespace exercise01_1_2 {
         if(full()) {
             capacity_ *= 2;
             T* newData = new T[capacity_ ];
-            std::unique_ptr<T> nData(newData);
             std::copy(data_ , data_+count_ , newData);
             std::swap(data_ , newData);
-            //delete [] newData;
+            delete [] newData;
         }
 
         data_[count_] = oneMore;
@@ -164,16 +163,18 @@ namespace exercise01_3 {
         explicit MyVector(size_t capacity = 10) : capacity_(capacity), count_(0), data_(new T[capacity_]) {}
 
         MyVector(const MyVector& other) : capacity_(other.capacity_), count_(other.count_) {
-            std::unique_ptr<T> temp(new T[other.capacity_]);
+            std::unique_ptr<T[]> temp(new T[other.capacity_]);
             std::copy(other.begin(), other.end(), temp.get());
             data_ = std::move(temp);
         }
 
-        MyVector(MyVector&& other) noexcept : capacity_(std::move(other.capacity_)), count_(std::move(other.count_)), data_(std::move(other.data_)) {}
+        MyVector(const MyVector&& other) noexcept : capacity_(std::move(other.capacity_)), count_(std::move(other.count_)), data_(std::move(other.data_)) {}
 
         MyVector& operator=(const MyVector& other){
             MyVector<T> copy(other);
-            std::swap(copy, *this);
+            std::swap(data_, copy.data_);
+            std::swap(capacity_, copy.capacity_);
+            std::swap(count_, copy.count_);
             return *this;
         }
 
@@ -228,15 +229,15 @@ namespace exercise01_3 {
 
         void Resize(){
             capacity_ *= 2;
-            std::unique_ptr<T> temp(new T[capacity_]);
+            std::unique_ptr<T[]> temp(new T[capacity_]);
             std::copy(data_.get(), data_.get() + count_, temp.get()); //Notice that the elements should be copyable.
             std::swap(data_, temp);
         }
 
         size_t capacity_;
         size_t count_;
-        std::unique_ptr<T> data_;
-//        T* data_; /* Contains the actual elements - data on the heap */
+        std::unique_ptr<T[]> data_;
+        //T* data_E; /* Contains the actual elements - data on the heap */
     };
 }
 #endif //LECTURE02_EXERCISE01_SHAREDPTR_H

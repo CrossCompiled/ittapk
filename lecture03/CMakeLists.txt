@@ -18,7 +18,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/modules/")
 # Lecture Library
 add_library(${LECTURE}
         src/exercise02/LogFile.cpp
-        )
+        src/exercise02/LogFileTransformed.cpp)
 target_include_directories(${LECTURE} PUBLIC includes)
 
 # Executeables
@@ -39,7 +39,7 @@ set(LTESTS
 
 foreach(testfile ${LTESTS})
     get_filename_component(name ${testfile} NAME_WE)
-    add_executable(${name} "${testfile}")
+    add_executable(${name} "${testfile}" includes/lecture03/exercise02/LogFileTransformed.h)
     target_link_libraries(${name} ${LECTURE})
     target_link_libraries(${name} ${GMOCK_MAIN_LIBRARY})
     set_target_properties(${name} PROPERTIES
