@@ -5,32 +5,52 @@
 #include <type_traits>
 
 namespace exercise02  {
-		template <typename T>
-		class MyArrayIterator : public std::iterator<std::random_access_iterator_tag, T> {
-		private:
-				T* ptr_;
-		public:
-				MyArrayIterator() : ptr_(nullptr) {}
-				MyArrayIterator(T* ptr) : ptr_(ptr) {}
-
-				MyArrayIterator(const MyArrayIterator<T>& it) : ptr_(it.ptr_) {}
-
-				MyArrayIterator operator++() { ++ptr_; return *this; }
-				MyArrayIterator operator++(int) { MyArrayIterator tmp(*this); operator++(); return tmp; }
-
-				int operator-(const MyArrayIterator<T>& it) { return ptr_ - it.ptr_; }
-
-				bool operator==(const MyArrayIterator& rhs) { return ptr_ == rhs.ptr_; }
-				bool operator!=(const MyArrayIterator& rhs) { return ptr_ != rhs.ptr_; }
-
-				T& operator*() { return *ptr_; }
-		};
-
-		template<typename T, size_t N>
+		template<typename T, size_t N, class A = std::allocator<T>>
 		class MyArray {
-
 		public:
-				typedef T value_type;
+				typedef typename A::value_type value_type;
+
+				class iterator {
+				public:
+						typedef std::random_access_iterator_tag iterator_category;
+						typedef typename A::difference_type difference_type;
+						typedef typename A::value_type value_type;
+						typedef typename A::reference reference;
+						typedef typename A::pointer pointer;
+
+						iterator() : ptr_(T()) {}
+						iterator(T* ptr) : ptr_(ptr) {}
+
+						iterator(const iterator& it) : ptr_(it.ptr_) {}
+
+						iterator& operator=(iterator& it) { ptr_ = it.ptr_; return this; }
+
+						iterator& operator++() { ++ptr_; return *this; }
+						iterator operator++(int) { return iterator(ptr_++); }
+						iterator& operator--() { --ptr_; return *this; }
+						iterator operator--(int) { return iterator(ptr_--); }
+
+						iterator& operator+=(const difference_type& i) { ptr_ += i; return *this; };
+						iterator& operator-=(const difference_type& i) { ptr_ -= i; return *this; };
+
+						iterator operator+(const difference_type i) const { return iterator(ptr_ + i); }
+						iterator operator-(const difference_type i) const { return iterator(ptr_ - i); }
+						difference_type operator-(const iterator& it) const { return ptr_ - it.ptr_; }
+
+						reference operator*() { return *ptr_; }
+						pointer operator->() {	return ptr_; }
+						reference operator[](const difference_type i) const { return ptr_[i]; }
+
+						bool operator==(const iterator& rhs) { return ptr_ == rhs.ptr_; }
+						bool operator!=(const iterator& rhs) { return ptr_ != rhs.ptr_; }
+						bool operator<(const iterator& rhs) { return ptr_ < rhs.ptr_; }
+						bool operator<=(const iterator& rhs) { return ptr_ <= rhs.ptr_; }
+						bool operator>(const iterator& rhs) { return ptr_ > rhs.ptr_; }
+						bool operator>=(const iterator& rhs) { return ptr_ >= rhs.ptr_; }
+
+				private:
+						T* ptr_;
+				};
 
 				MyArray() {}
 
@@ -55,14 +75,14 @@ namespace exercise02  {
 
 				void fill(const T& value) { std::fill(this->begin(), this->end(), value); }
 
-				MyArrayIterator<T> begin() { return MyArrayIterator<T>(data); }
-				MyArrayIterator<const T> begin() const { return MyArrayIterator<T>(data);	}
+				iterator begin() { return iterator(data); }
+				//MyArrayIterator<const T> begin() const { return MyArrayIterator<T>(data);	}
 
-				MyArrayIterator<T> end() { return MyArrayIterator<T>(data + N);	}
-				MyArrayIterator<const T> end() const { return MyArrayIterator<T>(data + N);	}
+				iterator end() { return iterator(data + N);	}
+				//MyArrayIterator<const T> end() const { return MyArrayIterator<T>(data + N);	}
 
-				T& operator[](int i) const { return this->data[i]; }
 				T& operator[](int i) { return this->data[i]; }
+				T& operator[](int i) const { return this->data[i]; }
 
 				size_t size() const {	return N;	}
 

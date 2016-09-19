@@ -23,3 +23,17 @@ TEST_F (NormalConstructor, stdcopy) {
 	ASSERT_THAT(tmp[3], 5);
 	ASSERT_THAT(tmp[4], 5);
 }
+
+TEST_F (NormalConstructor, iterator) {
+	MyArray<int, 5> uut;
+
+	uut[0] = 0;
+	uut[1] = 1;
+	uut[2] = 2;
+	uut[3] = 3;
+	uut[4] = 4;
+
+	auto it = uut.begin();
+	ASSERT_THAT(it[3], 3);
+
+}
