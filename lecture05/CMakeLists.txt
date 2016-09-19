@@ -8,7 +8,7 @@ ENDIF()
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/modules/")
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/../modules/")
 
 
 set(LECTURE lecture05)
@@ -36,7 +36,7 @@ file(COPY src/product.db DESTINATION .)
 enable_testing()
 find_package(GTest REQUIRED)
 
-set(LTESTS test/exercise01/test_exercise01.cpp)
+set(LTESTS test/exercise01/test_exercise01.cpp test/exercise02/test_exercise02.cpp)
 
 foreach(testfile ${LTESTS})
     get_filename_component(name ${testfile} NAME_WE)

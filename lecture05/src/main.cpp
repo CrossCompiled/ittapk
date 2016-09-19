@@ -11,8 +11,7 @@ using namespace exercise01;
 /*
  * Read products from file
  */
-void productDBRead(ProductList& pl, const std::string& fileName)
-{
+void productDBRead(ProductList& pl, const std::string& fileName) {
 	pl.clear();
 	std::ifstream s(fileName.c_str());
 
@@ -26,8 +25,7 @@ void productDBRead(ProductList& pl, const std::string& fileName)
 /**
  * Printout all products
  */
-void printAll(const ProductList& pl)
-{
+void printAll(const ProductList& pl) {
 	std::cout << "##################################################" << std::endl;
 	std::cout << "Printing out all products..." << std::endl;
 	std::cout << "----------------------------" << std::endl;
@@ -42,8 +40,7 @@ void printAll(const ProductList& pl)
 /*
  * Add item
  */
-void addItem(ProductList& pl)
-{
+void addItem(ProductList& pl) {
 	std::cout << "##################################################" << std::endl;
 	std::cout << "Add item" << std::endl;
 	std::cout << "----------------------------" << std::endl;
@@ -88,8 +85,7 @@ void productDBWrite(const ProductList& pl, const std::string& fileName) {
 /*
  * Print poorly selling products
  */
-void printPoorlySellingProducts(const ProductList& pl)
-{
+void printPoorlySellingProducts(const ProductList& pl) {
 	std::cout << "##################################################" << std::endl;
 	std::cout << "Poorly selling products" << std::endl;
 	std::cout << "----------------------------" << std::endl;
@@ -104,8 +100,7 @@ void printPoorlySellingProducts(const ProductList& pl)
 /*
  * Set a discount on all products - Using for_each()
  */
-void addDiscountUsingForEach(ProductList& pl)
-{
+void addDiscountUsingForEach(ProductList& pl) {
 	int discount;
 
 	std::cout << "Enter discount: " << std::endl;
@@ -142,19 +137,18 @@ void addDiscountUsingSetDiscount(ProductList& pl) {
 /*
  * Calculate the total amount of sold products
  */
-void calcTotalSoldProducts(ProductList& pl)
-{
-	int sold = 0;
-	std::for_each(pl.begin(), pl.end(), [&sold](Product p){ sold += p.sold(); });
+void calcTotalSoldProducts(ProductList& pl) {
+	std::vector<unsigned int> sold;
+	std::transform(pl.begin(), pl.end(), std::back_inserter(sold), std::mem_fun_ref(&Product::price));
 
 	std::cout << "##################################################" << std::endl;
-	std::cout << "Total amount of sold products..." << std::endl;
+	std::cout << "Total amount of sold products" << std::endl;
 	std::cout << "----------------------------" << std::endl;
 
-	std::cout << sold << std::endl;
+	std::cout << std::accumulate(sold.begin(), sold.end(), 0) << std::endl;
 
 	std::cout << "##################################################" << std::endl;
-};
+}
 
 
 /*

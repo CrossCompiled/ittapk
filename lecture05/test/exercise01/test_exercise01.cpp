@@ -2,8 +2,6 @@
 #include <gmock/gmock.h>
 #include "lecture05/exercise01/product.h"
 
-//region NormalConstructor
-
 using namespace exercise01;
 
 class NormalConstructor : public ::testing::Test {
@@ -18,6 +16,3 @@ TEST_F (NormalConstructor, Initialization) {
 	ASSERT_THAT(uut.price(), 10);
 	ASSERT_THAT(uut.sold(), 0);
 }
-
-//endregion
-
