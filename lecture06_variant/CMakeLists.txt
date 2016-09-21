@@ -23,17 +23,15 @@ target_include_directories(${LECTURE} INTERFACE includes)
 enable_testing()
 find_package(GTest REQUIRED)
 
+
 set(LTESTS
-        test/exercise01/test_exercise01_SharedPtr.cpp
-        test/exercise02/test_exercise02_SharedPtrUnsafe.cpp
-        test/exercise02/test_exercise02_Comparison.cpp
-        test/exercise03/test_exercise03_SharedPtr.cpp
-        test/exercise04/test_exercise04_Comparison.cpp
+        test/exercise01/test_exercise01_VariantStream.cpp
+        test/exercise02/test_exercise02_Visitors.cpp
         )
 
 foreach(testfile ${LTESTS})
     get_filename_component(name ${testfile} NAME_WE)
-    add_executable(${name} "${testfile}")
+    add_executable(${name} "${testfile}" includes/lecture06_variant/exercise01/Variance.h includes/lecture06_variant/exercise02/Visitor.h)
     target_link_libraries(${name} ${LECTURE})
     target_link_libraries(${name} ${GMOCK_MAIN_LIBRARY})
     set_target_properties(${name} PROPERTIES
