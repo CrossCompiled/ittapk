@@ -12,10 +12,37 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/../modules/")
 
-set(LECTURE lecture06_timer)
-add_library(${LECTURE} INTERFACE)
-target_include_directories(${LECTURE} INTERFACE includes)
+set(BOOST_ROOT "/usr/local/boost-1.61.0")
+find_package(Boost REQUIRED)
 
+set(LECTURE lecture06_timer)
+add_library(${LECTURE} STATIC
+        src/exercise01/Timer.cpp
+        src/exercise01/Events.cpp
+        src/exercise02/Timer.cpp
+        src/exercise02/Events.cpp
+        src/exercise02/Functor.cpp src/exercise02/Functor.h)
+
+target_include_directories(${LECTURE} PUBLIC includes)
+target_include_directories(${LECTURE} PUBLIC ${Boost_INCLUDE_DIRS})
+set_target_properties(${LECTURE} PROPERTIES
+    CXX_STANDARD 11
+    CXX_STANDARD_REQUIRED YES
+)
+
+add_executable(exercise01 src/exercise01/Bindfunction.cpp)
+target_link_libraries(exercise01 ${LECTURE})
+set_target_properties(exercise01 PROPERTIES
+    CXX_STANDARD 11
+    CXX_STANDARD_REQUIRED YES
+)
+
+add_executable(exercise02 src/exercise02/Bindfunction.cpp)
+target_link_libraries(exercise02 ${LECTURE})
+set_target_properties(exercise02 PROPERTIES
+        CXX_STANDARD 11
+        CXX_STANDARD_REQUIRED YES
+        )
 
 #########
 # TESTS
@@ -25,10 +52,6 @@ find_package(GTest REQUIRED)
 
 set(LTESTS
         test/exercise01/test_exercise01_SharedPtr.cpp
-        test/exercise02/test_exercise02_SharedPtrUnsafe.cpp
-        test/exercise02/test_exercise02_Comparison.cpp
-        test/exercise03/test_exercise03_SharedPtr.cpp
-        test/exercise04/test_exercise04_Comparison.cpp
         )
 
 foreach(testfile ${LTESTS})
