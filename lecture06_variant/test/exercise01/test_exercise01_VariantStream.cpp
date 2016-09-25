@@ -28,6 +28,8 @@ TEST (Stream, Variant){
     boost::variant<int, std::string, IAmUserDefined> myVariant(10);
     std::stringstream stream;
 
+
+    myVariant.which();
     stream << myVariant;
     std::string map = stream.str();
 
