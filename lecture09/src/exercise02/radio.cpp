@@ -84,7 +84,7 @@ struct RadioPlaying;
 /**
  * On
  */
-struct On : sc::simple_state<On, MeanMachine, RadioPlaying>{
+struct On : sc::simple_state<On, MeanMachine, boost::mpl::list<sc::deep_history<RadioPlaying>>, sc::has_deep_history>{
     PRINT_ENTRY_EXIT(0, On);
     typedef sc::transition<EvOff, Off> reactions;
 };
@@ -103,7 +103,7 @@ struct Off : sc::simple_state<Off, MeanMachine>{
 struct FMTuner;
 struct AMTuner;
 
-struct RadioPlaying : sc::simple_state<RadioPlaying, On, FMTuner>{
+struct RadioPlaying : sc::simple_state<RadioPlaying, On, boost::mpl::list<sc::shallow_history<FMTuner>>, sc::has_shallow_history>{
     PRINT_ENTRY_EXIT(1, RadioPlaying);
     typedef boost::mpl::list<sc::transition<EvCDInserted, CDLoading>, sc::custom_reaction<EvCD>> reactions;
     sc::result react(const EvCD& kalleNavn){
@@ -174,26 +174,28 @@ int main()
     MyMeanMachine.initiate();
     //MyMeanMachine.cdIn = false;
 
-    std::cout << "Sending EvOn" << std::endl;
+    //std::cout << "Sending EvOn" << std::endl;
     MyMeanMachine.process_event(EvOn());
-    std::cout << "Sending EvAMTuner" << std::endl;
+    //std::cout << "Sending EvAMTuner" << std::endl;
     MyMeanMachine.process_event(EvAMTuner());
-    std::cout << "Sending EvCDInserted" << std::endl;
+    //std::cout << "Sending EvCDInserted" << std::endl;
     MyMeanMachine.process_event(EvCDInserted());
-    std::cout << "Sending EvCDState(true)" << std::endl;
+    //std::cout << "Sending EvCDState(true)" << std::endl;
     MyMeanMachine.process_event(EvCDState(true));
-    std::cout << "Sending EvTuner" << std::endl;
+    //std::cout << "Sending EvTuner" << std::endl;
     MyMeanMachine.process_event(EvTuner());
-    std::cout << "Sending EvCD" << std::endl;
+    //std::cout << "Sending EvCD" << std::endl;
     MyMeanMachine.process_event(EvCD());
     MyMeanMachine.cdIn = true;
-    std::cout << "Sending EvCD" << std::endl;
+
+    //std::cout << "Sending EvCD" << std::endl;
     MyMeanMachine.process_event(EvCD());
-    std::cout << "Sending EvOff" << std::endl;
+    MyMeanMachine.process_event(EvTuner());
+    //std::cout << "Sending EvOff" << std::endl;
     MyMeanMachine.process_event(EvOff());
-    std::cout << "Sending EvOn" << std::endl;
+    //std::cout << "Sending EvOn" << std::endl;
     MyMeanMachine.process_event(EvOn());
-    std::cout << "Sending EvTuner" << std::endl;
+    //std::cout << "Sending EvTuner" << std::endl;
     MyMeanMachine.process_event(EvTuner());
 
     return 0;
